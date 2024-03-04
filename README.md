@@ -34,3 +34,35 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+// Implement the getStaticPaths function // Dynamic Page
+export async function getStaticPaths() {
+  // Fetch the dynamic paths from an API or any data source
+  const response = await fetch('https://api.example.com/posts');
+  const posts = await response.json();
+
+  // Generate an array of paths based on the fetched data
+  const paths = posts.map((post) => ({
+    params: { id: post.id.toString() },
+  }));
+
+  // Return the array of paths
+  return {
+    paths,
+    fallback: false, // or 'blocking' or true
+  };
+}
+
+// Implement the getStaticProps function // SSG
+export async function getStaticProps() {
+  // Fetch the data from an API or any data source
+  const response = await fetch('https://api.example.com/data');
+  const data = await response.json();
+
+  // Return the fetched data as props
+  return {
+    props: {
+      data,
+    },
+  };
+}
