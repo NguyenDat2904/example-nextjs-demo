@@ -1,4 +1,3 @@
-import Script from "next/script";
 import AuthProvider from "./(components)/AuthProvider";
 import Nav from "./(components)/nav";
 import "./globals.css";

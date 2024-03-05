@@ -37,46 +37,46 @@ export const options = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
 
-    CredentialsProvider({
-      // The name to display on the sign in form (e.g. "Sign in with...")
-      name: "Credentials",
-      // `credentials` is used to generate a form on the sign in page.
-      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-      // e.g. domain, username, password, 2FA token, etc.
-      // You can pass any HTML attribute to the <input> tag through the object.
-      credentials: {
-        email: { label: "email", type: "text", placeholder: "Your Email" },
-        password: {
-          label: "password",
-          type: "password",
-          placeholder: "Your Password",
-        },
-      },
-      async authorize(credentials) {
-        try {
-          const foundUser = await User.findOne({ email: credentials.email });
+    // CredentialsProvider({
+    //   // The name to display on the sign in form (e.g. "Sign in with...")
+    //   name: "Credentials",
+    //   // `credentials` is used to generate a form on the sign in page.
+    //   // You can specify which fields should be submitted, by adding keys to the `credentials` object.
+    //   // e.g. domain, username, password, 2FA token, etc.
+    //   // You can pass any HTML attribute to the <input> tag through the object.
+    //   credentials: {
+    //     email: { label: "email", type: "text", placeholder: "Your Email" },
+    //     password: {
+    //       label: "password",
+    //       type: "password",
+    //       placeholder: "Your Password",
+    //     },
+    //   },
+    //   async authorize(credentials) {
+    //     try {
+    //       const foundUser = await User.findOne({ email: credentials.email });
 
-          if (foundUser) {
-            console.log("User Exists");
-            const match = await bcrypt.compare(
-              credentials.password,
-              foundUser.password
-            );
-            if (match) {
-              console.log("Good Pass");
-              delete foundUser.password;
-              foundUser["role"] = "Unverified Email";
-              foundUser["name"] = foundUser.full_name;
+    //       if (foundUser) {
+    //         console.log("User Exists");
+    //         const match = await bcrypt.compare(
+    //           credentials.password,
+    //           foundUser.password
+    //         );
+    //         if (match) {
+    //           console.log("Good Pass");
+    //           delete foundUser.password;
+    //           foundUser["role"] = "Unverified Email";
+    //           foundUser["name"] = foundUser.full_name;
 
-              return foundUser;
-            }
-          }
-        } catch (error) {
-          console.log(error);
-        }
-        return null;
-      },
-    }),
+    //           return foundUser;
+    //         }
+    //       }
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
+    //     return null;
+    //   },
+    // }),
   ],
   callbacks: {
     // create accessToke

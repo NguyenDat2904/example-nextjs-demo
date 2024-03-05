@@ -1,8 +1,11 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 
 function Member() {
+  const searchParams = useSearchParams();
+  console.log(searchParams.get("id"));
+
   // Access user info in React components
   const { data: session } = useSession({
     required: true,
@@ -10,8 +13,6 @@ function Member() {
       redirect("/api/auth/signin/callbackUrl=/client-member");
     },
   });
-
-  console.log(session?.user);
 
   return (
     <div>
